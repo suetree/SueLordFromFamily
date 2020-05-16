@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<base xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" type="string">
+	<strings>
+		<string id="sue_clan_create_from_family_request" text="I want you to be a vassal of my kindom" />
+		<string id="sue_clan_create_from_family_need_spouse" text="I need a spouse." />
+		<string id="sue_clan_create_from_family_need_money" text="I need some money to hire soldiers." />
+		<string id="sue_clan_create_from_family_complete" text="I would go through fire and water for you." />
+		<string id="sue_clan_create_from_family_of_forget" text=" Or forget " />
+		<string id="sue_clan_create_from_family_choice_spouse_item_change" text=" The next group. " />
+		<string id="sue_clan_create_from_family_choice_spouse_item_change_tip" text=" Help me choose a nice one." />
+		<string id="sue_clan_create_from_family_choice_settlement_tip" text="Really? Which territory am I going to get?" />
+		<string id="sue_clan_create_from_family_need_spouse_not" text="Not spouse to you" />
+	</strings>
+</base>

@@ -1,0 +1,1 @@
+﻿SueLordFromFamily/ModuleData/sue_clan_create_from_family.xml: strings.string.text
