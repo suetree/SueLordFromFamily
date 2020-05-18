@@ -17,9 +17,24 @@ Revision of version 1.1:
 1. Spouse becomes optional
 2. When you choose fief, you still give the latest fief BUG
 
+1.2 version 
+1.修正分封同伴没有变成家族指挥官问题， 这个会导致俘虏解脱后无法创建移动部队
+2.修正给已经结婚的同伴分封时， 画面卡住问题
+
+1. Fixed that the lord who from you companion will just be inactive in castle after got captured and release.
+and add a option in chat whit a lord who be inactive in castle , that let the lord create a mobile party
+2. Fixed the problem of dialogue get stuck when select a companion who married. 
+i have test the companion who married and his spouse is not PlayerClan 
+i have not test the companion who married and his spouse is PlayerClan 
+
+
+
+
 参考：
 感谢 MOD:Rulership， 参考了部分代码， 主要是如何创建新家族，和移动部队。这使我节省了时间研究。
 感谢玩家： blub5，感谢他详细解说了Rulership 出现闪退的问题。让我知道我应该要去解决这个问题。
+
+
 
 Reference
 Thanks to MOD:Rulership, which refers to part of the code, mainly about how to create a new family, and mobile units.It saved me time to study.

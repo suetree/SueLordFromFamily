@@ -8,7 +8,7 @@ using TaleWorlds.CampaignSystem.Actions;
 using TaleWorlds.Core;
 using TaleWorlds.Library;
 using TaleWorlds.Localization;
-using TaleWorlds.ObjectSystem;
+
 
 namespace SueLordFromFamily
 {
@@ -62,9 +62,20 @@ namespace SueLordFromFamily
 			campaignGameStarter.AddPlayerLine("sue_clan_create_from_family", "hero_main_options", "sue_clan_create_from_family_request", GameTexts.FindText("sue_clan_create_from_family_request", null).ToString(), new ConversationSentence.OnConditionDelegate(this.CreateClanCondition), null, 100, null, null);
 			campaignGameStarter.AddDialogLine("sue_clan_create_from_family", "sue_clan_create_from_family_request", "sue_clan_create_from_family_start", GameTexts.FindText("sue_clan_create_from_family_choice_settlement_tip", null).ToString(), null, null, 100, null);
 
-			campaignGameStarter.AddDialogLine("sue_clan_create_from_family_need_spouse", "sue_clan_create_from_family_choice_other", "sue_clan_create_from_family_take_spouse", GameTexts.FindText("sue_clan_create_from_family_need_spouse", null).ToString(), new ConversationSentence.OnConditionDelegate(RequirementCondition), null, 100, null);
+			campaignGameStarter.AddDialogLine("sue_clan_create_from_family_need_spouse", "sue_clan_create_from_family_choice_other", "sue_clan_create_from_family_take_spouse", GameTexts.FindText("sue_clan_create_from_family_need_spouse", null).ToString(), new ConversationSentence.OnConditionDelegate(RequirementSpouseCondition), null, 100, null);
 			
-			campaignGameStarter.AddDialogLine("sue_clan_create_from_family_need_money", "sue_clan_create_from_family_choice_other", "sue_clan_create_from_family_take_money", GameTexts.FindText("sue_clan_create_from_family_need_money", null).ToString(), new ConversationSentence.OnConditionDelegate(RequirementCondition), new ConversationSentence.OnConsequenceDelegate(CreateVassal), 100, null);
+			campaignGameStarter.AddDialogLine("sue_clan_create_from_family_need_money", "sue_clan_create_from_family_choice_other", "sue_clan_create_from_family_take_money", GameTexts.FindText("sue_clan_create_from_family_need_money", null).ToString(), new ConversationSentence.OnConditionDelegate(RequirementSpouseNotNeedCondition), new ConversationSentence.OnConsequenceDelegate(
+				() => {
+					Hero hero = Hero.OneToOneConversationHero;
+					if (null != hero && null!= hero.Spouse && hero.Spouse != Hero.MainHero && !Hero.MainHero.ExSpouses.Contains(hero.Spouse))
+					{
+						if (hero.Spouse.Clan ==  Clan.PlayerClan)
+						{
+							targetSpouse = hero.Spouse;
+						}
+					}
+					}
+				), 100, null);
 	
 			campaignGameStarter.AddDialogLine("sue_clan_create_from_family_need_money", "sue_clan_create_from_family_request_money", "sue_clan_create_from_family_take_money", GameTexts.FindText("sue_clan_create_from_family_need_money", null).ToString(), null, null, 100, null);
 			campaignGameStarter.AddPlayerLine("sue_clan_create_from_family_money_50k", "sue_clan_create_from_family_take_money", "sue_clan_create_from_family_complete", "50000", null, new ConversationSentence.OnConsequenceDelegate(() => { takeMoney = 50000; }), 100, null, null);
@@ -73,11 +84,38 @@ namespace SueLordFromFamily
 			
 			campaignGameStarter.AddDialogLine("sue_clan_create_from_family_request_complete", "sue_clan_create_from_family_complete", "sue_clan_create_from_family_complete_2", GameTexts.FindText("sue_clan_create_from_family_complete", null).ToString(), null, new ConversationSentence.OnConsequenceDelegate(CreateVassal), 100, null);
 
+
+			//修正不是指挥官的Lord
+			campaignGameStarter.AddPlayerLine("sue_clan_create_from_family_change_hero_to_commander", "hero_main_options", "change_hero_to_commander", GameTexts.FindText("sue_clan_create_from_family_your_are_commander", null).ToString(), new ConversationSentence.OnConditionDelegate(CanChangeHeroToCommander), new ConversationSentence.OnConsequenceDelegate(() => {
+				Hero hero = Hero.OneToOneConversationHero;
+				if(null != hero && null != hero.Clan)
+				{
+					hero.Clan.CreateNewMobileParty(hero);
+				}
+			}), 100, null, null);
+			campaignGameStarter.AddDialogLine("sue_clan_create_from_family_change_hero_to_commander", "change_hero_to_commander", "", GameTexts.FindText("sue_clan_create_from_family_your_are_commander_accept", null).ToString(), null, null, 100, null);
+
+			//测试
 			//campaignGameStarter.AddPlayerLine("sue_clan_create_from_family_test", "hero_main_options", "tell_me_u_occupation", "你职业是啥", null, new ConversationSentence.OnConsequenceDelegate(ShowOccupation), 100, null, null);
+			
 			//campaignGameStarter.AddDialogLine("sue_clan_create_from_family_test", "tell_me_u_occupation", "", "我职业是 {OCCUPATION_NAME}  - {ORGIN_OCCUPATION_NAME}", null, null, 100, null);
 		}
 
+
+		private bool CanChangeHeroToCommander()
+		{
+			bool canChangeHeroToCommander = false;
+			Hero hero = Hero.OneToOneConversationHero;
+			if (null != hero && hero.CharacterObject.Occupation == Occupation.Lord && hero.Clan != null && hero.Clan != Clan.PlayerClan && !hero.Clan.CommanderHeroes.ToList().Contains(hero))
+			{
+				canChangeHeroToCommander = true;
+
+			}
 		
+			return canChangeHeroToCommander;
+		}
+
+
 
 		private void ShowOccupation()
 		{
@@ -88,6 +126,15 @@ namespace SueLordFromFamily
 			String orginname = System.Enum.GetName(characterObject.Occupation.GetType(), characterObject.Occupation);
 			MBTextManager.SetTextVariable("OCCUPATION_NAME", name, false);
 			MBTextManager.SetTextVariable("ORGIN_OCCUPATION_NAME", orginname, false);
+			//MBTextManager.SetTextVariable("STATUS", characterObject.st, false);
+
+			if(characterObject.HeroObject != null)
+			{
+				InformationManager.DisplayMessage(new InformationMessage("characterObject.HeroObject,CLAN=" + characterObject.HeroObject.Clan.Name));
+				//InformationManager.DisplayMessage(new InformationMessage("characterObject.HeroObject,CLAN=" + characterObject.HeroObject.CompanionOf.Name));
+				InformationManager.DisplayMessage(new InformationMessage("characterObject.HeroObject.HeroState=" + characterObject.HeroObject.HeroState));
+			}
+
 			InformationManager.DisplayMessage(new InformationMessage("Occupation=" + name));
 
 		}
@@ -131,7 +178,6 @@ namespace SueLordFromFamily
 					Hero spouse = obj.HeroObject;
 					addPlayerLineToSelectSpouse(spouse);
 				});
-
 				campaignGameStarter.AddRepeatablePlayerLine(FLAG_CLAN_CREATE_CHOICE_SPOUSE_ITEM, "sue_clan_create_from_family_take_spouse", "close_window", GameTexts.FindText("sue_clan_create_from_family_of_forget", null).ToString(), null, null, 100, null);
 			}
 			else
@@ -189,18 +235,29 @@ namespace SueLordFromFamily
 
 		}
 
-		private bool RequirementCondition()
+		private bool RequirementSpouseCondition()
 		{
 			Hero hero = Hero.OneToOneConversationHero;
-			return null != hero && hero.Spouse == null;
+			return null != hero && (hero.Spouse == null || (hero.Spouse != null && hero.Spouse.Clan != Clan.PlayerClan));
+		}
+
+
+
+		private bool RequirementSpouseNotNeedCondition()
+		{
+			Hero hero = Hero.OneToOneConversationHero;
+			return null != hero && (hero.Spouse != null && hero.Spouse.Clan == Clan.PlayerClan);
 		}
 
 		private bool CreateClanCondition()
 		{
 			if (null == Hero.OneToOneConversationHero) return false;
-			
+
+			targetSpouse = null;
+			targetSettlement = null;
+
 			List<Settlement> settlements = Hero.MainHero.Clan.Settlements.Where((settlement) => (settlement.IsTown || settlement.IsCastle)).ToList();
-			if (settlements.Count < 2)
+			if (settlements.Count < 1)
 			{
 				return false;
 			}
@@ -224,8 +281,6 @@ namespace SueLordFromFamily
 				}
 			}
 			return false;
-
-			
 		}
 
 		private void CreateVassal()
@@ -254,20 +309,21 @@ namespace SueLordFromFamily
 
 			SetOccupationToLord(hero);
 			hero.ChangeState(Hero.CharacterStates.Active);
-			Clan clan = MBObjectManager.Instance.CreateObject<Clan>("sue_clan_" + str);
+			Clan clan = TaleWorlds.ObjectSystem.MBObjectManager.Instance.CreateObject<Clan>("sue_clan_" + str);
 			Banner banner = Banner.CreateRandomClanBanner(-1);
 			clan.InitializeClan(nameTextObject, textObject, culture, banner);
 			clan.AddRenown(150f, true);
 			clan.SetLeader(hero);
+			
 			hero.Clan = clan;
 			hero.CompanionOf = null;
 			hero.IsNoble = true;
 			hero.SetTraitLevel(DefaultTraits.Commander, 1);
 
-			Vec2 position2D = Hero.MainHero.PartyBelongedTo.Position2D;
-			MobileParty mobileParty = MobilePartyHelper.SpawnLordParty(hero, position2D, 5f);
+			MobileParty mobileParty = clan.CreateNewMobileParty(hero);
 			mobileParty.ItemRoster.AddToCounts(DefaultItems.Grain, 10, true);
 			mobileParty.ItemRoster.AddToCounts(DefaultItems.Meat, 5, true);
+
 			ChangeOwnerOfSettlementAction.ApplyByKingDecision(hero, targetSettlement);
 			clan.UpdateHomeSettlement(targetSettlement);
 
@@ -306,20 +362,25 @@ namespace SueLordFromFamily
 			{
 				targetSpouse.Spouse = hero;
 				InformationManager.AddQuickInformation(new TextObject($"{hero.Name} marry with {targetSpouse.Name}"), 0, null, "event:/ui/notification/quest_finished");
+				
 				RemoveCompanionAction.ApplyByFire(Hero.MainHero.Clan, targetSpouse);
+				
 				targetSpouse.ChangeState(Hero.CharacterStates.Active);
 				targetSpouse.IsNoble = true;
 				SetOccupationToLord(targetSpouse);
-				AddCompanionAction.Apply(clan, targetSpouse);
-				MobileParty targetSpouseMobileParty = MobilePartyHelper.SpawnLordParty(targetSpouse, position2D, 6f);
+				targetSpouse.CompanionOf = null;
+				targetSpouse.Clan = clan;
+				targetSpouse.SetTraitLevel(DefaultTraits.Commander, 1);
+				//AddCompanionAction.Apply(clan, targetSpouse);
+
+				MobileParty targetSpouseMobileParty = clan.CreateNewMobileParty(hero);
 				targetSpouseMobileParty.ItemRoster.AddToCounts(DefaultItems.Grain, 10, true);
 				targetSpouseMobileParty.ItemRoster.AddToCounts(DefaultItems.Meat, 5, true);
 				GiveGoldAction.ApplyBetweenCharacters(Hero.MainHero, targetSpouse, takeMoney / 2, false);
+
+				clan.CreateNewMobileParty(targetSpouse);
 			}
-
-
 			PlayerLineUtils.cleanRepeatableLine(campaignGameStarter);
-
 		}
 
 		private static List<Settlement> GetCandidateSettlements()
@@ -337,7 +398,6 @@ namespace SueLordFromFamily
 			if (hero.CharacterObject.Occupation == Occupation.Lord) return ;
 			
 			FieldInfo fieldInfo = hero.CharacterObject.GetType().GetField("_originCharacter", BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance);
-			CharacterObject originalCharacterObject = (CharacterObject)fieldInfo.GetValue(hero.CharacterObject);
 			PropertyInfo propertyInfo = typeof(CharacterObject).GetProperty("Occupation");
 			if (null != propertyInfo && null != propertyInfo.DeclaringType)
 			{
@@ -347,9 +407,19 @@ namespace SueLordFromFamily
 					propertyInfo.SetValue(hero.CharacterObject, Occupation.Lord, null);
 				}
 			}
-			fieldInfo.SetValue(hero.CharacterObject, CharacterObject.PlayerCharacter);
+			if (null != fieldInfo)
+			{
+				fieldInfo.SetValue(hero.CharacterObject, CharacterObject.PlayerCharacter);
+			}
+			else
+			{
+				FieldInfo fieldInfoId = hero.CharacterObject.GetType().GetField("_originCharacterStringId", BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance);
+				if (null != fieldInfoId)
+				{
+					fieldInfoId.SetValue(hero.CharacterObject, CharacterObject.PlayerCharacter.StringId);
+				}
+			}
 			//main_hero
 		}
-
 	}
 }

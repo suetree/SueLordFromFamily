@@ -10,5 +10,7 @@
 		<string id="sue_clan_create_from_family_choice_spouse_item_change_tip" text=" Help me choose a nice one." />
 		<string id="sue_clan_create_from_family_choice_settlement_tip" text="Really? Which territory am I going to get?" />
 		<string id="sue_clan_create_from_family_need_spouse_not" text="Not spouse to you" />
+		<string id="sue_clan_create_from_family_your_are_commander" text="Your are a commander" />
+		<string id="sue_clan_create_from_family_your_are_commander_accept" text="Thank you, I already know who I am" />
 	</strings>
 </base>
