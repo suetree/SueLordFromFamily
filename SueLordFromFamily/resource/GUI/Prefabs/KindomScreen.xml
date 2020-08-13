@@ -1,0 +1,30 @@
+﻿<Prefab>
+  <Constants>
+  </Constants>
+  <Variables>
+  </Variables>
+  <VisualDefinitions>
+    <VisualDefinition Name="TopMenu" TransitionDuration="0.2">
+      <VisualState PositionYOffset="0" State="Default" />
+    </VisualDefinition>
+  </VisualDefinitions>
+  <Window>
+    <Widget Id="OpenSpouseManagerTopBar" VisualDefinition="TopMenu" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent"
+		        SuggestedWidth="650" HorizontalAlignment="Left" VerticalAlignment="Top" MarginTop="10"
+		        DoNotAcceptEvents="true">
+      <Children>
+        <ButtonWidget Id="OpenSpouseManager" DoNotPassEventsToChildren="true" WidthSizePolicy="Fixed"
+				              HeightSizePolicy="Fixed" SuggestedWidth="120"
+				              SuggestedHeight="45" HorizontalAlignment="Left"
+				              VerticalAlignment="Top" MarginLeft="330"
+				              MarginTop="0" Brush="ButtonBrush4" Command.Click="ShowClanServiceView">
+
+          <Children>
+            <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Popup.Button.Text" Text="@BtnName" />
+          </Children>
+        </ButtonWidget>
+
+      </Children>
+    </Widget>
+  </Window>
+</Prefab>

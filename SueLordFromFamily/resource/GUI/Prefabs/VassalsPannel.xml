@@ -1,0 +1,58 @@
+﻿<Prefab>
+
+  <Constants>
+    <Constant Name="Clan.Header.Width" BrushLayer="Default" BrushName="Clan.Header" BrushValueType="Width" />
+    <Constant Name="Clan.Header.Height" BrushLayer="Default" BrushName="Clan.Header" BrushValueType="Height" />
+
+    <Constant Name="Clan.Management.Collapser.Width" BrushLayer="Default" BrushName="Clan.Management.Collapser" BrushValueType="Width" />
+    <Constant Name="Clan.Management.Collapser.Height" BrushLayer="Default" BrushName="Clan.Management.Collapser" BrushValueType="Height" />
+
+    <Constant Name="Clan.Management.LeftTuple.Width" BrushLayer="Default" BrushName="Clan.Management.LeftTuple" BrushValueType="Width" />
+    <Constant Name="Clan.Management.LeftTuple.Height" BrushLayer="Default" BrushName="Clan.Management.LeftTuple" BrushValueType="Height" />
+
+    <Constant Name="Clan.Management.LeftTupleLocked.Width" BrushLayer="Default" BrushName="Clan.Management.LeftTupleLocked" BrushValueType="Width" />
+    <Constant Name="Clan.Management.LeftTupleLocked.Height" BrushLayer="Default" BrushName="Clan.Management.LeftTupleLocked" BrushValueType="Height" />
+
+    <Constant Name="Scroll.Header.Width" BrushLayer="Default" BrushName="Scroll.Header" BrushValueType="Width" />
+    <Constant Name="Scroll.Header.Height" BrushLayer="Default" BrushName="Scroll.Header" BrushValueType="Height" />
+
+    <Constant Name="Popup.CloseButton.Width" BrushLayer="Default" BrushName="Popup.CloseButton" BrushValueType="Width" />
+    <Constant Name="Popup.CloseButton.Height" BrushLayer="Default" BrushName="Popup.CloseButton" BrushValueType="Height" />
+  </Constants>
+  
+  <Window>
+    <Widget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" MarginTop="190" SuggestedHeight="780" SuggestedWidth="755"
+        
+            HorizontalAlignment="Center"
+            UpdateChildrenStates="true" >
+      <Children>
+
+        <!--List and Scrollbar horizontal list-->
+        <ListPanel WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent">
+          <Children>
+        <!--Clan List Scrollable Panel-->
+        <ScrollablePanel WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="3" MarginBottom="3" AutoHideScrollBars="true" ClipRect="ClanListClipRect" InnerPanel="ClanListClipRect\ClanList" VerticalScrollbar="..\ClansListScrollbar\Scrollbar">
+          <Children>
+            <Widget Id="ClanListClipRect" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" ClipContents="true">
+              <Children>
+            <ListPanel Id="ClanList" DataSource="{Clans}" HeightSizePolicy="CoverChildren" WidthSizePolicy="StretchToParent"
+                        LayoutImp.LayoutMethod="VerticalBottomToTop" HorizontalAlignment="Left" >
+              <ItemTemplate>
+                <VassalClan />
+              </ItemTemplate>
+            </ListPanel>
+              </Children>
+            </Widget>
+
+          </Children>
+        </ScrollablePanel>
+        <Standard.VerticalScrollbar Id="ClansListScrollbar" HeightSizePolicy="StretchToParent" HorizontalAlignment="Right" MarginRight="2" MarginLeft="2" MarginBottom="3" />
+          </Children>
+        </ListPanel>
+
+     
+
+      </Children>
+    </Widget>
+  </Window>
+</Prefab>

@@ -1,0 +1,107 @@
+﻿<Prefab>
+
+  <Constants>
+    <Constant Name="Clan.Header.Width" BrushLayer="Default" BrushName="Clan.Header" BrushValueType="Width" />
+    <Constant Name="Clan.Header.Height" BrushLayer="Default" BrushName="Clan.Header" BrushValueType="Height" />
+
+    <Constant Name="Clan.Management.Collapser.Width" BrushLayer="Default" BrushName="Clan.Management.Collapser" BrushValueType="Width" />
+    <Constant Name="Clan.Management.Collapser.Height" BrushLayer="Default" BrushName="Clan.Management.Collapser" BrushValueType="Height" />
+
+    <Constant Name="Clan.Management.LeftTuple.Width" BrushLayer="Default" BrushName="Clan.Management.LeftTuple" BrushValueType="Width" />
+    <Constant Name="Clan.Management.LeftTuple.Height" BrushLayer="Default" BrushName="Clan.Management.LeftTuple" BrushValueType="Height" />
+
+    <Constant Name="Clan.Management.LeftTupleLocked.Width" BrushLayer="Default" BrushName="Clan.Management.LeftTupleLocked" BrushValueType="Width" />
+    <Constant Name="Clan.Management.LeftTupleLocked.Height" BrushLayer="Default" BrushName="Clan.Management.LeftTupleLocked" BrushValueType="Height" />
+
+    <Constant Name="Scroll.Header.Width" BrushLayer="Default" BrushName="Scroll.Header" BrushValueType="Width" />
+    <Constant Name="Scroll.Header.Height" BrushLayer="Default" BrushName="Scroll.Header" BrushValueType="Height" />
+
+    <Constant Name="Popup.CloseButton.Width" BrushLayer="Default" BrushName="Popup.CloseButton" BrushValueType="Width" />
+    <Constant Name="Popup.CloseButton.Height" BrushLayer="Default" BrushName="Popup.CloseButton" BrushValueType="Height" />
+  </Constants>
+  
+  <Window>
+    <Widget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" MarginTop="190" SuggestedHeight="780" SuggestedWidth="1155"
+        
+           HorizontalAlignment="Center"
+            UpdateChildrenStates="true" >
+      <Children>
+
+        <ListPanel HeightSizePolicy="StretchToParent"   WidthSizePolicy="StretchToParent"  LayoutImp.LayoutMethod="HorizontalLeftToRight" >
+
+          <Children>
+
+         
+            <ListPanel Id="ClanElementsRect" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" LayoutImp.LayoutMethod="VerticalBottomToTop">
+              <Children>
+
+              
+                <!--Family Toggle Button-->
+                <ToggleWidget DoNotPassEventsToChildren="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedWidth="!Clan.Management.Collapser.Width" SuggestedHeight="100" HorizontalAlignment="Left" VerticalAlignment="Top" Brush="Kingdom.Policy.Toggle.Tuple" RenderLate="true" WidgetToClose="..\FamilyList">
+                  <Children>
+                    <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Clan.Management.Collapser.Text" Text="封臣家族" />
+
+                    <ListPanel HeightSizePolicy="Fixed" WidthSizePolicy="Fixed"  HorizontalAlignment="Center" MarginTop="50"   SuggestedHeight="40" SuggestedWidth="320"   >
+                      <Children>
+                        <ButtonWidget  DoNotPassEventsToChildren="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="ButtonBrush4" >
+                          <Children>
+                            <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Popup.Button.Text" Text="更改旗帜" />
+                          </Children>
+                        </ButtonWidget>
+
+                        <ButtonWidget  DoNotPassEventsToChildren="true" WidthSizePolicy="StretchToParent" MarginLeft="50" HeightSizePolicy="StretchToParent" Brush="ButtonBrush4" >
+                          <Children>
+                            <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Popup.Button.Text" Text="更改名字" />
+                          </Children>
+                        </ButtonWidget>
+                      </Children>
+                    </ListPanel>
+                  </Children>
+                </ToggleWidget>
+                
+             <ListPanel DataSource="{Clans}" HeightSizePolicy="StretchToParent" WidthSizePolicy="StretchToParent"  
+               LayoutImp.LayoutMethod="VerticalBottomToTop" HorizontalAlignment="Left" >
+              <ItemTemplate>
+                <VassalClan />
+              </ItemTemplate>
+            </ListPanel>
+
+              </Children>
+            </ListPanel>
+
+ 
+          
+            
+            <ListPanel Id="MemberElementsRect" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" LayoutImp.LayoutMethod="VerticalBottomToTop">
+              <Children>
+
+                <!--Family Toggle Button-->
+                <ToggleWidget DoNotPassEventsToChildren="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedWidth="!Clan.Management.Collapser.Width" SuggestedHeight="100" HorizontalAlignment="Left" VerticalAlignment="Top" Brush="Kingdom.Policy.Toggle.Tuple" RenderLate="true" WidgetToClose="..\FamilyList">
+                  <Children>
+                    <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Clan.Management.Collapser.Text" Text="家族成员" />
+                  </Children>
+                </ToggleWidget>
+                
+            <ListPanel DataSource="{Members}" HeightSizePolicy="StretchToParent" WidthSizePolicy="StretchToParent"  
+            LayoutImp.LayoutMethod="VerticalBottomToTop" HorizontalAlignment="Left" >
+              <ItemTemplate>
+                <MemberItem />
+              </ItemTemplate>
+            </ListPanel>
+          </Children>
+        </ListPanel>
+
+       
+      </Children>
+        </ListPanel>
+
+
+         
+  
+
+     
+
+      </Children>
+    </Widget>
+  </Window>
+</Prefab>

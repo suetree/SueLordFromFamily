@@ -4,6 +4,7 @@ using TaleWorlds.MountAndBlade;
 using TaleWorlds.CampaignSystem;
 using TaleWorlds.Library;
 using StoryMode;
+using HarmonyLib;
 
 namespace SueLordFromFamily
 {
@@ -11,12 +12,14 @@ namespace SueLordFromFamily
     {
         protected override void OnSubModuleLoad()
         {
-  
+            Harmony harmony = new Harmony("mod.sue.lordFromFamily");
+            harmony.PatchAll();
         }
 
 
         protected override void OnGameStart(Game game, IGameStarter gameStarterObject)
         {
+            InformationManager.DisplayMessage(new InformationMessage("LordFromFamily OnGameStart"));
             if (gameStarterObject.GetType() == typeof(CampaignGameStarter))
             {
                 ((CampaignGameStarter)gameStarterObject).AddBehavior(new LordFromFamilyBehavior());

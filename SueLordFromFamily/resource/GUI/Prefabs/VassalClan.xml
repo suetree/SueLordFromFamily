@@ -1,0 +1,89 @@
+﻿<Prefab>
+
+  <Constants>
+
+    <Constant Name="Kingdom.Item.Tuple.Width" BrushLayer="Default" BrushName="Kingdom.Item.Tuple" BrushValueType="Width" />
+    <Constant Name="Kingdom.Item.Tuple.Height" BrushLayer="Default" BrushName="Kingdom.Item.Tuple" BrushValueType="Height" />
+
+    <Constant Name="Kingdom.Clans.Sort.1.Width" BrushLayer="Default" BrushName="Kingdom.Clans.Sort.1" BrushValueType="Width" />
+
+    <Constant Name="Kingdom.Clans.Sort.2.Width" BrushLayer="Default" BrushName="Kingdom.Clans.Sort.2" BrushValueType="Width" />
+
+    <Constant Name="Kingdom.Clans.Sort.3.Width" BrushLayer="Default" BrushName="Kingdom.Clans.Sort.3" BrushValueType="Width" />
+
+    <Constant Name="Kingdom.Clans.Sort.4.Width" BrushLayer="Default" BrushName="Kingdom.Clans.Sort.4" BrushValueType="Width" />
+
+    <Constant Name="Kingdom.Clans.Sort.5.Width" BrushLayer="Default" BrushName="Kingdom.Clans.Sort.5" BrushValueType="Width" />
+
+    <Constant Name="Kingdom.Clans.Sort.6.Width" BrushLayer="Default" BrushName="Kingdom.Clans.Sort.6" BrushValueType="Width" />
+
+    <Constant Name="Kingdom.Clans.Sort.1.Width.WithMarginRight" Additive="-32" Value="!Kingdom.Clans.Sort.1.Width" />
+
+    <Constant Name="Banner.Width" BrushLayer="Default" BrushName="Flat.Tuple.Banner.Small" BrushValueType="Width" />
+    <Constant Name="Banner.Height" BrushLayer="Default" BrushName="Flat.Tuple.Banner.Small" BrushValueType="Height" />
+
+    <Constant Name="Banner.Width.Scaled" MultiplyResult="0.43" Value="!Banner.Width" />
+    <Constant Name="Banner.Height.Scaled" MultiplyResult="0.43" Value="!Banner.Height"/>
+
+  </Constants>
+  
+  <Window>
+    <Widget  WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedWidth="!Kingdom.Item.Tuple.Width" SuggestedHeight="120" Brush="Kingdom.Item.Tuple" Command.Click="OnSelect" IsSelected="@IsSelected">
+
+      <Children>
+        
+        <ListPanel  WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent">
+          <Children>
+
+            <!--Clan Banner-->
+            <Widget WidthSizePolicy="Fixed" HeightSizePolicy="StretchToParent" SuggestedWidth="80" VerticalAlignment="Center" IsEnabled="false">
+              <Children>
+                <MaskedTextureWidget DataSource="{Banner_9}" WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="80" SuggestedHeight="100" HorizontalAlignment="Left" VerticalAlignment="Top" MarginLeft="9" Brush="Flat.Tuple.Banner.Small" AdditionalArgs="@AdditionalArgs" ImageId="@Id" ImageTypeCode="@ImageTypeCode" IsDisabled="true" OverlayTextureScale="2" PositionYOffset="-1"/>
+              </Children>
+            </Widget>
+
+            <!--Portrait-->
+            <Widget WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren"  MarginLeft="15" MarginRight="15" MarginTop="5" MarginBottom="5"  VerticalAlignment="Center"  IsHidden="@IsChild">
+              <Children>
+                <ButtonWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="120" SuggestedHeight="100"  Command.Click="ExecuteLink" Command.HoverBegin="ExecuteBeginHint" Command.HoverEnd="ExecuteEndHint" DoNotPassEventsToChildren="true" >
+                  <Children>
+                    <ImageIdentifierWidget DataSource="{Visual}" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginLeft="5" MarginRight="5" MarginTop="5" MarginBottom="5" AdditionalArgs="@AdditionalArgs" ImageId="@Id" ImageTypeCode="@ImageTypeCode" />
+                  </Children>
+                </ButtonWidget>
+              </Children>
+            </Widget>
+
+            <!--Clan Name-->
+            <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" SuggestedWidth="!Kingdom.Clans.Sort.3.Width"  IsEnabled="false" >
+              <Children>
+                <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="ArmyManagement.Army.Tuple.Name" Text="@Name"  Brush.FontSize="30" />
+              </Children>
+            </Widget>
+
+           
+
+            <ListPanel HeightSizePolicy="Fixed"  VerticalAlignment="Center" WidthSizePolicy="Fixed"  HorizontalAlignment="Right" MarginRight="20"  LayoutImp.LayoutMethod="VerticalBottomToTop"    SuggestedHeight="90" SuggestedWidth="120"   >
+              <Children>
+                <ButtonWidget  DoNotPassEventsToChildren="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="ButtonBrush4" 
+                               Command.Click="EditClanBanner" >
+                  <Children>
+                    <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Popup.Button.Text" Text="更改旗帜" />
+                  </Children>
+                </ButtonWidget>
+
+                <ButtonWidget  DoNotPassEventsToChildren="true" WidthSizePolicy="StretchToParent" MarginTop="10" HeightSizePolicy="StretchToParent" Brush="ButtonBrush4"
+                                Command.Click="EditClanName">
+                  <Children>
+                    <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Popup.Button.Text" Text="更改名字" />
+                  </Children>
+                </ButtonWidget>
+              </Children>
+            </ListPanel>
+     
+
+          </Children>
+        </ListPanel>
+      </Children>
+    </Widget>
+  </Window>
+</Prefab>

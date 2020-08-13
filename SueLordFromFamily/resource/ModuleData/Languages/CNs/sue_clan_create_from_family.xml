@@ -15,5 +15,8 @@
 		<string id="sue_clan_create_from_family_need_spouse_not" text="没配偶给你" />
 		<string id="sue_clan_create_from_family_your_are_commander" text="你是一个指挥官" />
 		<string id="sue_clan_create_from_family_your_are_commander_accept" text="感谢你， 我已经知道我是谁了" />
+
+    <string id="sue_clan_create_from_family_kindom_screen_btn" text="封臣管理" />
+    <string id="sue_clan_create_from_family_clan_service" text="封臣管理" />
 	</strings>
 </base>

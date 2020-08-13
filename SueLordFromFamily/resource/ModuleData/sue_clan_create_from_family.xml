@@ -12,5 +12,8 @@
 		<string id="sue_clan_create_from_family_need_spouse_not" text="Not spouse to you" />
 		<string id="sue_clan_create_from_family_your_are_commander" text="Your are a commander" />
 		<string id="sue_clan_create_from_family_your_are_commander_accept" text="Thank you, I already know who I am" />
+
+    <string id="sue_clan_create_from_family_kindom_screen_btn" text="Vassal Service" />
+    <string id="sue_clan_create_from_family_clan_service" text="Vassal Service" />
 	</strings>
 </base>
