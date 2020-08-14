@@ -43,6 +43,26 @@ namespace SueLordFromFamily.view
 		private int _clanType = -1;
 
 		[DataSourceProperty]
+		public string EditVassalBannerText
+		{
+			get
+			{
+				return   new TextObject("{=sue_clan_create_from_family_edit_banner}Edit Banner", null).ToString();
+			}
+			
+		}
+
+		[DataSourceProperty]
+		public string EditVassalNameText
+		{
+			get
+			{
+				return new TextObject("{=sue_clan_create_from_family_edit_name}Edit Name", null).ToString();
+			}
+
+		}
+
+		[DataSourceProperty]
 		public string Name
 		{
 			get
@@ -279,7 +299,8 @@ namespace SueLordFromFamily.view
 		public override void RefreshValues()
 		{
 			base.RefreshValues();
-			CharacterCode characterCode = CharacterCode.CreateFrom(this.Clan.Leader.CharacterObject);
+			// CharacterCode characterCode = CharacterCode.CreateFrom(this.Clan.Leader.CharacterObject);
+			CharacterCode characterCode = CampaignUIHelper.GetCharacterCode(this.Clan.Leader.CharacterObject, false);
 			this.Visual = new ImageIdentifierVM(characterCode);
 			this.Banner = new ImageIdentifierVM(this.Clan.Banner);
 			this.Banner_9 = new ImageIdentifierVM(BannerCode.CreateFrom(this.Clan.Banner), true);

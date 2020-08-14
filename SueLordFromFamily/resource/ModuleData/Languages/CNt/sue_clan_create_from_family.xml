@@ -17,8 +17,17 @@
     <string id="sue_clan_create_from_family_your_are_commander" text="妳是壹個指揮官" />
     <string id="sue_clan_create_from_family_your_are_commander_accept" text="感謝妳， 我已經知道我是誰了" />
 
+    <string id="sue_clan_create_from_family_vassal_request_children" text="我想讓孩子們和我壹起走" />
+    <string id="sue_clan_create_from_family_vassal_request_children_result_1" text="好的，雖然我很喜歡他們，但是讓他們和妳們在壹起會讓他們更開心點" />
+    <string id="sue_clan_create_from_family_vassal_request_children_result_2" text="很抱歉，我不能這麽做，我覺得妳的孩子留在我這裏會更安全" />
+
+    <string id="sue_clan_create_from_family_edit_banner" text="修改旗幟" />
+    <string id="sue_clan_create_from_family_edit_name" text="修改名稱" />
     <string id="sue_clan_create_from_family_kindom_screen_btn" text="封臣管理" />
     <string id="sue_clan_create_from_family_clan_service" text="封臣管理" />
+
+    <string id="sue_clan_create_from_family_change_clan_request" text="我想讓妳去別的家族工作 " />
+    <string id="sue_clan_create_from_family_change_clan_answer" text="好的，我願意， 請告訴我，我要去哪個家族工作" />
     
 	</strings>
 </base>

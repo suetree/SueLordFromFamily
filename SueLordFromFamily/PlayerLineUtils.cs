@@ -4,14 +4,14 @@ using System.Collections.Generic;
 
 using System.Reflection;
 using TaleWorlds.CampaignSystem;
-
+using TaleWorlds.Core;
 
 namespace SueLordFromFamily
 {
     class PlayerLineUtils
     {
 
-        public static void cleanRepeatableLine(CampaignGameStarter campaignGameStarter)
+        public static void cleanRepeatableLine(CampaignGameStarter campaignGameStarter, String flag)
 		{
 			//InformationManager.DisplayMessage(new InformationMessage("LordFromFamilyBehavior cleanRepeatableLine"));
 			ConversationManager conversationManager;
@@ -26,8 +26,8 @@ namespace SueLordFromFamily
 					List<ConversationSentence> sentences = (List<ConversationSentence>)objectListInfo.GetValue(conversationManager);
 
 					//InformationManager.DisplayMessage(new InformationMessage("sentences.size=" + sentences.Count));
-					sentences.RemoveAll((ConversationSentence s) => LordFromFamilyBehavior.FLAG_CLAN_CREATE_CHOICE_SETTLEMENT_ITEM == s.Id);
-					sentences.RemoveAll((ConversationSentence s) => LordFromFamilyBehavior.FLAG_CLAN_CREATE_CHOICE_SPOUSE_ITEM == s.Id);
+					 sentences.RemoveAll((ConversationSentence s) => flag == s.Id);
+					//sentences.RemoveAll((ConversationSentence s) => LordFromFamilyBehavior.FLAG_CLAN_CREATE_CHOICE_SPOUSE_ITEM == s.Id);
 					//InformationManager.DisplayMessage(new InformationMessage("sentences.size=" + sentences.Count));
 
 				}

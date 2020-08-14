@@ -16,7 +16,16 @@
 		<string id="sue_clan_create_from_family_your_are_commander" text="Sen bir komutansın." />
 		<string id="sue_clan_create_from_family_your_are_commander_accept" text="Teşekkür ederim, kim olduğumu zaten biliyorum." />
 
+    <string id="sue_clan_create_from_family_vassal_request_children" text="Çocukların benimle gitmesini istiyorum" />
+    <string id="sue_clan_create_from_family_vassal_request_children_result_1" text="Biraz hoşuma seve seve biraz ama seninle olması onları daha mutlu ediyor." />
+    <string id="sue_clan_create_from_family_vassal_request_children_result_2" text="Bunu yapamadım için üzgünüm ve bence çocuklarının benimle kalması daha güvenli." />
+
+    <string id="sue_clan_create_from_family_edit_banner" text="Bayrağı değiştirin" />
+    <string id="sue_clan_create_from_family_edit_name" text="Adı değiştirin." />
     <string id="sue_clan_create_from_family_kindom_screen_btn" text="Sızdırmazlık hizmeti." />
     <string id="sue_clan_create_from_family_clan_service" text="Sızdırmazlık hizmeti." />
+
+    <string id="sue_clan_create_from_family_change_clan_request" text="Başka bir aile için çalışmanı istiyorum." />
+    <string id="sue_clan_create_from_family_change_clan_answer" text="Evet, evet, lütfen bana hangi aile için çalışacağımı söyle." />
 	</strings>
 </base>

@@ -22,12 +22,8 @@
                       </Children>
                     </Widget>
 
-                  
-
                     <VassalsPannel />
                             
-                
-                    
                     <ButtonWidget Command.Click="ExecuteCloseWindow" HeightSizePolicy ="Fixed" WidthSizePolicy="Fixed" SuggestedHeight="50" SuggestedWidth="50" VerticalAlignment="Top" HorizontalAlignment="Center" MarginTop="20" MarginLeft="700" Brush="Popup.CloseButton"/>
 
                   </Children>

@@ -71,8 +71,12 @@
   </ItemGroup>
   <!-- Files & Classes -->
   <ItemGroup>
+    <Compile Include="dialogue\AbsCreateDialogue.cs" />
+    <Compile Include="dialogue\ChaneHeroClanDialogue.cs" />
+    <Compile Include="dialogue\CreateClanDialogue.cs" />
     <Compile Include="dialogue\DialogueCreator.cs" />
     <Compile Include="HeroInfoHelper.cs" />
+    <Compile Include="HeroOperation.cs" />
     <Compile Include="LordFromFamilyBehavior.cs" />
     <Compile Include="NewClanBannerEditorState.cs" />
     <Compile Include="path\KindomScreenLayerPatch.cs" />
@@ -80,7 +84,7 @@
     <Compile Include="RandomUtils.cs" />
     <Compile Include="SubModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="VassalBussniess.cs" />
+    <Compile Include="ClanCreateBussniess.cs" />
     <Compile Include="view\MBVassalBannerEditorGauntletScreen.cs" />
     <Compile Include="view\MemberItemVM.cs" />
     <Compile Include="view\VassalClanVM.cs" />

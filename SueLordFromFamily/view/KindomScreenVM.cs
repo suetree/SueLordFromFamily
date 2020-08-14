@@ -29,7 +29,7 @@ namespace SueLordFromFamily.view
 		{
 			get
 			{
-				return new TextObject("{=sue_clan_create_from_family_kindom_screen_btn}Spouse Service", null).ToString();
+				return new TextObject("{=sue_clan_create_from_family_clan_service}Clan Service", null).ToString();
 			}
 		}
 
