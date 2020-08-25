@@ -76,7 +76,7 @@ namespace SueLordFromFamily.dialogue
 					index++;
 				});
 				CampaignGameStarter.AddRepeatablePlayerLine(FLAG_CLAN_CREATE_CHOICE_CLAN_ITEM, "sue_clan_create_from_family_change_clan_answer_select", "sue_clan_create_from_family_take_clan_change", GameTexts.FindText("sue_clan_create_from_family_choice_spouse_item_change", null).ToString(), null, new ConversationSentence.OnConsequenceDelegate(() => { GenerateDialogueForSelectClan(); }), 100, null);
-				CampaignGameStarter.AddDialogLine(FLAG_CLAN_CREATE_CHOICE_CLAN_ITEM, "sue_clan_create_from_family_take_clan_change", "sue_clan_create_from_family_start", GameTexts.FindText("sue_clan_create_from_family_choice_spouse_item_change_tip", null).ToString(), null, null, 100, null);
+				CampaignGameStarter.AddDialogLine(FLAG_CLAN_CREATE_CHOICE_CLAN_ITEM, "sue_clan_create_from_family_take_clan_change", "sue_clan_create_from_family_change_clan_answer_select", GameTexts.FindText("sue_clan_create_from_family_choice_spouse_item_change_tip", null).ToString(), null, null, 100, null);
 				CampaignGameStarter.AddRepeatablePlayerLine(FLAG_CLAN_CREATE_CHOICE_CLAN_ITEM, "sue_clan_create_from_family_change_clan_answer_select", "close_window", GameTexts.FindText("sue_clan_create_from_family_of_forget", null).ToString(), null, null, 100, null);
 			}
 		}
@@ -85,7 +85,10 @@ namespace SueLordFromFamily.dialogue
 
 		private void addPlayerLineToSelectClan(Clan clan)
 		{
-			CampaignGameStarter.AddRepeatablePlayerLine(FLAG_CLAN_CREATE_CHOICE_CLAN_ITEM, "sue_clan_create_from_family_change_clan_answer_select", "sue_clan_create_from_family_change_clan_answer_select_result", clan.Name.ToString(), null, new ConversationSentence.OnConsequenceDelegate(() =>
+			int heroCount = clan.Heroes.Select((obj) => ((int)obj.Age >= (int)Campaign.Current.Models.AgeModel.HeroComesOfAge)).Count();
+			
+			String showText = clan.Name.ToString() + String.Format("   ( Hero Count = {0};  Clan Tier = {1} )", heroCount, clan.Tier); 
+			CampaignGameStarter.AddRepeatablePlayerLine(FLAG_CLAN_CREATE_CHOICE_CLAN_ITEM, "sue_clan_create_from_family_change_clan_answer_select", "sue_clan_create_from_family_change_clan_answer_select_result", showText, null, new ConversationSentence.OnConsequenceDelegate(() =>
 			{
 				this.targetChangeClan = clan;
 			}));

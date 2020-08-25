@@ -234,7 +234,7 @@ namespace SueLordFromFamily.view
 			this._onCharacterSelect = onCharacterSelect;
 			CharacterCode characterCode = CharacterCode.CreateFrom(hero.CharacterObject);
 			this.Visual = new ImageIdentifierVM(characterCode);
-			this.IsFamilyMember = Hero.MainHero.Clan.Nobles.Contains(this._hero);
+			//this.IsFamilyMember = Hero.MainHero.Clan.Nobles.Contains(this._hero);
 			this.Banner_9 = new ImageIdentifierVM(BannerCode.CreateFrom(hero.ClanBanner), true);
 			this.RefreshValues();
         }

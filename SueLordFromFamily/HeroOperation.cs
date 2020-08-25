@@ -16,12 +16,13 @@ namespace SueLordFromFamily
 		{
 			if (hero.Clan == Clan.PlayerClan)
 			{
-				RemoveCompanionAction.ApplyByFire(Hero.MainHero.Clan, hero);
+				DealApplyByFire(Hero.MainHero.Clan, hero);
+				SetOccupationToLord(hero);
 				hero.Clan = clan;
 				hero.CompanionOf = null;
 				hero.ChangeState(Hero.CharacterStates.Active);
 				hero.IsNoble = true;
-				SetOccupationToLord(hero);
+			
 
 				if (hero.Age >= Campaign.Current.Models.AgeModel.HeroComesOfAge && hero.PartyBelongedTo == null)
 				{
@@ -61,6 +62,19 @@ namespace SueLordFromFamily
 				}
 			}
 			//main_hero
+		}
+
+		/**
+		 * 炒鱿鱼
+		 */
+		public static void DealApplyByFire(Clan clan, Hero hero)
+		{
+			if (null == hero.LastSeenPlace)
+			{
+				hero.CacheLastSeenInformation(hero.HomeSettlement, true);
+				hero.SyncLastSeenInformation();
+			}
+			RemoveCompanionAction.ApplyByFire(Hero.MainHero.Clan, hero);
 		}
 	}
 }

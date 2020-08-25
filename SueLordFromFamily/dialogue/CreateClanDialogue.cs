@@ -12,6 +12,7 @@ namespace SueLordFromFamily.dialogue
 	{
 		public static String FLAG_CLAN_CREATE_CHOICE_SETTLEMENT_ITEM = "sue_clan_create_from_family_choice_settlememt_item";
 		public static String FLAG_CLAN_CREATE_CHOICE_SPOUSE_ITEM = "sue_clan_create_from_family_choice_settlememt_item";
+		public static String FLAG_CLAN_CREATE_CHOICE_CLAN_MONEY_TIER_ITEM = "sue_clan_create_from_family_choice_clan_money_tier";
 
 		ClanCreateBussniess clanCreateBussniess;
 
@@ -72,32 +73,9 @@ namespace SueLordFromFamily.dialogue
 				.Text(LoactionText("sue_clan_create_from_family_need_money"))
 				.CreateAndAdd(CampaignGameStarter);
 
-			new DialogueCreator()
-				.IsPlayer(true)
-				.Id("sue_clan_create_from_family_money_50k")
-				.InputOrder("sue_clan_create_from_family_take_money")
-				.OutOrder("sue_clan_create_from_family_complete_take_money")
-				.Text("50000")
-				.Result(PlayerGetMoney50KResult)
-				.CreateAndAdd(CampaignGameStarter);
 
-			new DialogueCreator()
-				.IsPlayer(true)
-				.Id("sue_clan_create_from_family_money_100k")
-				.InputOrder("sue_clan_create_from_family_take_money")
-				.OutOrder("sue_clan_create_from_family_complete_take_money")
-				.Text("100000")
-				.Result(PlayerGetMoney100KResult)
-				.CreateAndAdd(CampaignGameStarter);
-
-			//要钱 取消
-			new DialogueCreator()
-				.IsPlayer(true)
-				.Id("sue_clan_create_from_family_money_close")
-				.InputOrder("sue_clan_create_from_family_take_money")
-				.OutOrder("close_window")
-				.Text(LoactionText("sue_clan_create_from_family_of_forget"))
-				.CreateAndAdd(CampaignGameStarter);
+		
+		
 
 			///屏幕提示  有孩子
 			new DialogueCreator()
@@ -170,6 +148,9 @@ namespace SueLordFromFamily.dialogue
 			{
 				return false;
 			}
+
+			// InformationManager.DisplayMessage(new InformationMessage("LordFromFamily start condition"));
+
 			Hero hero = Hero.OneToOneConversationHero;
 			if (hero != null && hero.Clan == Clan.PlayerClan && hero.PartyBelongedTo != null &&
 				hero.PartyBelongedTo.LeaderHero == Hero.MainHero && Hero.MainHero.MapFaction is Kingdom
@@ -262,6 +243,26 @@ namespace SueLordFromFamily.dialogue
 			}
 		}
 
+		private void ShowClanMoneyTierList()
+		{
+			int canTakeMoneyMaxTier = 6;
+			for (int i = 2; i < 7; i++)
+			{
+			 bool canShow =	PlayGetMoneyByTierCondition(i);
+				if (!canShow )
+				{
+					canTakeMoneyMaxTier = i-1;
+					break;
+				}
+			}
+
+			for (int i = 2; i <= canTakeMoneyMaxTier; i++)
+			{
+				addPlayerLineToSelectClanMoneyTier(i);
+			}
+			CampaignGameStarter.AddRepeatablePlayerLine(FLAG_CLAN_CREATE_CHOICE_CLAN_MONEY_TIER_ITEM, "sue_clan_create_from_family_take_money", "close_window", GameTexts.FindText("sue_clan_create_from_family_of_forget", null).ToString(), null, null, 100, null );
+		}
+
 		public bool HasNoChildren()
 		{
 			return !HasChildren();
@@ -289,10 +290,7 @@ namespace SueLordFromFamily.dialogue
 			this.clanCreateBussniess.isTogetherWithThireChildren = true;
 		}
 
-		public void PlayerGetMoney100KResult()
-		{
-			this.clanCreateBussniess.takeMoney = 100000;
-		}
+
 
 		private void ResetDataForCreateClan()
 		{
@@ -323,17 +321,32 @@ namespace SueLordFromFamily.dialogue
 			}
 		}
 
-		public void PlayerGetMoney50KResult()
+		public bool PlayGetMoneyByTierCondition(int tier)
 		{
-			this.clanCreateBussniess.takeMoney = 50000;
+			int takeMoeny = clanCreateBussniess.TakeMoneyByTier(tier);
+			if (Hero.MainHero.Clan.Gold >= takeMoeny)
+			{
+
+				return true;
+			}else
+			{
+				return false;
+			}
+		}
+
+		public void PlayerGetMoneyByTierResult(int tier)
+		{
+			this.clanCreateBussniess.selectClanTier = tier;
 		}
 
 		private void GenerateDataForCreateClan()
 		{
 			PlayerLineUtils.cleanRepeatableLine(CampaignGameStarter, FLAG_CLAN_CREATE_CHOICE_SETTLEMENT_ITEM);
 			PlayerLineUtils.cleanRepeatableLine(CampaignGameStarter, FLAG_CLAN_CREATE_CHOICE_SPOUSE_ITEM);
+			PlayerLineUtils.cleanRepeatableLine(CampaignGameStarter, FLAG_CLAN_CREATE_CHOICE_CLAN_MONEY_TIER_ITEM);
 			ShowSelectSettlement();
 			ShowSelectSpouseList();
+			ShowClanMoneyTierList();
 		}
 
 		private void addPlayerLineToSelectSpouse(Hero spouse)
@@ -357,6 +370,14 @@ namespace SueLordFromFamily.dialogue
 			CampaignGameStarter.AddRepeatablePlayerLine(FLAG_CLAN_CREATE_CHOICE_SETTLEMENT_ITEM, "sue_clan_create_from_family_start", "sue_clan_create_from_family_choice_other", settlement.Name.ToString(), null, new ConversationSentence.OnConsequenceDelegate(() =>
 			{
 				this.clanCreateBussniess.targetSettlement = settlement;
+			}));
+		}
+
+		private void addPlayerLineToSelectClanMoneyTier(int tier)
+		{
+			CampaignGameStarter.AddRepeatablePlayerLine(FLAG_CLAN_CREATE_CHOICE_CLAN_MONEY_TIER_ITEM, "sue_clan_create_from_family_take_money", "sue_clan_create_from_family_complete_take_money", String.Format("{0} GLOD ( Tier = {1} )", clanCreateBussniess.TakeMoneyByTier(tier), tier), null, new ConversationSentence.OnConsequenceDelegate(() =>
+			{
+				this.clanCreateBussniess.selectClanTier = tier;
 			}));
 		}
 

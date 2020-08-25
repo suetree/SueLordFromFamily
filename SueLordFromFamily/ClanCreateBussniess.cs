@@ -16,7 +16,7 @@ namespace SueLordFromFamily
     {
 		public Hero targetSpouse { set; get; }
 		public Settlement targetSettlement { set; get; }
-		public int takeMoney = 50000;
+		public int selectClanTier = 2;
 
 		public bool isTogetherWithThireChildren;
 
@@ -50,7 +50,15 @@ namespace SueLordFromFamily
 			TextObject textObject = NameGenerator.Current.GenerateClanName(culture, targetSettlement);
 			TextObject nameTextObject = new TextObject(textObject.ToString());
 			string str = Guid.NewGuid().ToString().Replace("-", "");
-			RemoveCompanionAction.ApplyByFire(Hero.MainHero.Clan, hero);
+
+			if (null  == hero.LastSeenPlace)
+			{
+				hero.CacheLastSeenInformation(hero.HomeSettlement, true);
+				hero.SyncLastSeenInformation();
+			}
+			//RemoveCompanionAction.ApplyByFire(Hero.MainHero.Clan, hero);
+			//for  1.4.3 200815
+			HeroOperation.DealApplyByFire(Hero.MainHero.Clan, hero);
 
 			HeroOperation.SetOccupationToLord(hero);
 			hero.ChangeState(Hero.CharacterStates.Active);
@@ -58,7 +66,15 @@ namespace SueLordFromFamily
 			Banner banner = Banner.CreateRandomClanBanner(-1);
 			clan.InitializeClan(nameTextObject, textObject, culture, banner);
 			clan.SetLeader(hero);
-			clan.AddRenown(150f, true);
+
+			//clan.Tier = 5; 修改家族等级
+			 FieldInfo fieldInfoId = clan.GetType().GetField("_tier", BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance);
+			if (null != fieldInfoId)
+			{
+				fieldInfoId.SetValue(clan, selectClanTier);
+			}
+			//增加一些影响力
+			clan.AddRenown(50 * selectClanTier, true);
 
 
 			hero.Clan = clan;
@@ -73,6 +89,8 @@ namespace SueLordFromFamily
 			ChangeOwnerOfSettlementAction.ApplyByKingDecision(hero, targetSettlement);
 			clan.UpdateHomeSettlement(targetSettlement);
 
+
+			int takeMoney = TakeMoneyByTier(selectClanTier);
 			if (targetSpouse != null)
 			{
 				GiveGoldAction.ApplyBetweenCharacters(Hero.MainHero, hero, takeMoney / 2, false);
@@ -82,32 +100,40 @@ namespace SueLordFromFamily
 				GiveGoldAction.ApplyBetweenCharacters(Hero.MainHero, hero, takeMoney, false);
 			}
 
-			if (takeMoney == 100000)
+			//关系处理
+			//新晋家族关系增加
+			int shipIncreate = ShipIncreateByTier(selectClanTier);
+			ChangeRelationAction.ApplyPlayerRelation(hero, shipIncreate, true, true);
+			if (targetSpouse != null)
 			{
-				ChangeRelationAction.ApplyPlayerRelation(hero, 100, true, true);
-				if (targetSpouse != null)
-				{
-					ChangeRelationAction.ApplyPlayerRelation(targetSpouse, 100, true, true);
-				}
-
-			}
-			else
-			{
-				ChangeRelationAction.ApplyPlayerRelation(hero, 30, true, true);
-				if (targetSpouse != null)
-				{
-					ChangeRelationAction.ApplyPlayerRelation(targetSpouse, 30, true, true);
-				}
+				ChangeRelationAction.ApplyPlayerRelation(targetSpouse, shipIncreate, true, true);
 			}
 
-			ChangeKingdomAction.ApplyByJoinToKingdom(clan, kingdom, true);
+			//以前家族关系减低，
+			int shipReduce = ShipReduceByTier(selectClanTier);
+			Kingdom kindom = Hero.MainHero.MapFaction as Kingdom;
+			if(null != kindom && shipReduce > 0)
+			{
+				kindom.Clans.ToList().ForEach((obj) => 
+				{
+					if (obj != Clan.PlayerClan)
+					{
+						ChangeRelationAction.ApplyPlayerRelation(obj.Leader, shipReduce * -1, true, true);
+					}
+				}
+				);
+			}
+
+
+
 
 			if (targetSpouse != null)
 			{
 				targetSpouse.Spouse = hero;
 				InformationManager.AddQuickInformation(new TextObject($"{hero.Name} marry with {targetSpouse.Name}"), 0, null, "event:/ui/notification/quest_finished");
 
-				RemoveCompanionAction.ApplyByFire(Hero.MainHero.Clan, targetSpouse);
+				HeroOperation.DealApplyByFire(Hero.MainHero.Clan, targetSpouse);
+				//RemoveCompanionAction.ApplyByFire(Hero.MainHero.Clan, targetSpouse);
 
 				targetSpouse.ChangeState(Hero.CharacterStates.Active);
 				targetSpouse.IsNoble = true;
@@ -130,7 +156,42 @@ namespace SueLordFromFamily
 				DealTheirChildren(hero, clan);
 			}
 
+
+			//加入王国
+			ChangeKingdomAction.ApplyByJoinToKingdom(clan, kingdom, true);
+
 		}
+
+		public int TakeMoneyByTier(int tier)
+		{
+			// y=5(x次方) * 10 * 1000；
+			return (int)Math.Pow(5, tier) * 1000;
+		}
+
+		/**
+		 * 关系增加关系
+		 * 应该家族越少值越高
+		 */
+		public int ShipIncreateByTier(int tier)
+		{
+			return tier * 10;
+		}
+
+		/**
+		 * 关系降低
+		 * 根据玩家王国，的家族数进行计算，家族越多，评分到每个人的关系应该更低
+		 */
+		public int ShipReduceByTier(int tier)
+		{
+			int total = tier * 10;
+			Kingdom kindom = Hero.MainHero.MapFaction as Kingdom;
+			if (null != kindom && kindom.Clans.Count  >= 3)
+			{
+				total = total / (kindom.Clans.Count - 1);
+			}
+			return total;
+		}
+
 
 		// 递归处理孩子树
 		public void DealTheirChildren(Hero hero, Clan clan)
@@ -160,6 +221,8 @@ namespace SueLordFromFamily
 					select n).ToList<Settlement>();
 		}
 
-		
+
+
+
 	}
 }
