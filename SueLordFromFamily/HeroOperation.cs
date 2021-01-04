@@ -27,8 +27,8 @@ namespace SueLordFromFamily
 				if (hero.Age >= Campaign.Current.Models.AgeModel.HeroComesOfAge && hero.PartyBelongedTo == null)
 				{
 					MobileParty chilrenMobileParty = clan.CreateNewMobileParty(hero);
-					chilrenMobileParty.ItemRoster.AddToCounts(DefaultItems.Grain, 10, true);
-					chilrenMobileParty.ItemRoster.AddToCounts(DefaultItems.Meat, 5, true);
+					chilrenMobileParty.ItemRoster.AddToCounts(DefaultItems.Grain, 10);
+					chilrenMobileParty.ItemRoster.AddToCounts(DefaultItems.Meat, 5);
 				}
 
 				GiveGoldAction.ApplyBetweenCharacters(Hero.MainHero, hero, 2000, false);
