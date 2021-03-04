@@ -5,6 +5,7 @@ using TaleWorlds.CampaignSystem;
 using TaleWorlds.Library;
 using StoryMode;
 using HarmonyLib;
+using SueLordFromFamily.Behavior;
 
 namespace SueLordFromFamily
 {

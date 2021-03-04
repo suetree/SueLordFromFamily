@@ -12,6 +12,7 @@
     <RootNamespace>SueLordFromFamily</RootNamespace>
     <AssemblyName>SueLordFromFamily</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <GamePath>F:\steam\steamapps\common\Mount &amp; Blade II Bannerlord</GamePath>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <!-- Debug Configuration Properties -->
@@ -19,7 +20,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>F:\steam\steamapps\common\Mount &amp; Blade II Bannerlord\Modules\SueLordFromFamily\bin\Win64_Shipping_Client</OutputPath>
+    <OutputPath>$(GamePath)\Modules\SueLordFromFamily\bin\Win64_Shipping_Client</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>3</WarningLevel>
@@ -28,7 +29,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>F:\steam\steamapps\common\Mount &amp; Blade II Bannerlord\Modules\SueLordFromFamily\bin\Win64_Shipping_Client</OutputPath>
+    <OutputPath>$(GamePath)\Modules\SueLordFromFamily\bin\Win64_Shipping_Client</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -36,34 +37,34 @@
   <!-- Debugging Properties -->
   <PropertyGroup>
     <StartAction>Program</StartAction>
-    <StartProgram>F:\steam\steamapps\common\Mount &amp; Blade II Bannerlord\bin\Win64_Shipping_Client\Bannerlord.exe</StartProgram>
+    <StartProgram>$(GamePath)\bin\Win64_Shipping_Client\Bannerlord.exe</StartProgram>
     <!-- <StartArguments>/singleplayer _MODULES_*!DCC*Native*SandBoxCore*CustomBattle*Sandbox*StoryMode*ModLib*BoogiesUpgrades*zzCharacterCreation*DiplomacyFixes*EncyclopediaFix*FireLord*ImprovedGarrisons*MixedGenderTroops*Arrowmod*PartyScreenEnhancements*FixPersuasion*Aragas.SaveMissingModuleFix*ScoreSort*Telepathy*XorberaxDeadlyHorseCharges*zHunter*SueMoreSpouses*SueLordFromFamily*_MODULES_</StartArguments>-->
     <StartArguments>/singleplayer _MODULES_*Native*SandBoxCore*CustomBattle*Sandbox*StoryMode*zHunter*SueMoreSpouses*SueLordFromFamily*_MODULES_</StartArguments>
-    <StartWorkingDirectory>D:\steam\steamapps\common\Mount &amp; Blade II Bannerlord\bin\Win64_Shipping_Client</StartWorkingDirectory>
+    <StartWorkingDirectory>$(GamePath)\bin\Win64_Shipping_Client</StartWorkingDirectory>
   </PropertyGroup>
   <!-- Bannerlord Native Assemblies -->
   <ItemGroup>
     <Reference Include="0Harmony, Version=2.0.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Lib.Harmony.2.0.2\lib\net472\0Harmony.dll</HintPath>
     </Reference>
-    <Reference Include="F:\steam\steamapps\common\Mount &amp; Blade II Bannerlord\bin\Win64_Shipping_Client\TaleWorlds*.dll">
+    <Reference Include="$(GamePath)\bin\Win64_Shipping_Client\TaleWorlds*.dll">
       <HintPath>%(Identity)</HintPath>
       <Private>False</Private>
     </Reference>
     <!-- Bannerlord Module Assemblies  -->
-    <Reference Include="F:\steam\steamapps\common\Mount &amp; Blade II Bannerlord\Modules\Native\bin\Win64_Shipping_Client\TaleWorlds*.dll">
+    <Reference Include="$(GamePath)\Modules\Native\bin\Win64_Shipping_Client\TaleWorlds*.dll">
       <HintPath>%(Identity)</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="F:\steam\steamapps\common\Mount &amp; Blade II Bannerlord\Modules\SandBox\bin\Win64_Shipping_Client\SandBox*.dll">
+    <Reference Include="$(GamePath)\Modules\SandBox\bin\Win64_Shipping_Client\SandBox*.dll">
       <HintPath>%(Identity)</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="F:\steam\steamapps\common\Mount &amp; Blade II Bannerlord\Modules\StoryMode\bin\Win64_Shipping_Client\StoryMode*.dll">
+    <Reference Include="$(GamePath)\Modules\StoryMode\bin\Win64_Shipping_Client\StoryMode*.dll">
       <HintPath>%(Identity)</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="F:\steam\steamapps\common\Mount &amp; Blade II Bannerlord\Modules\CustomBattle\bin\Win64_Shipping_Client\TaleWorlds*.dll">
+    <Reference Include="$(GamePath)\Modules\CustomBattle\bin\Win64_Shipping_Client\TaleWorlds*.dll">
       <HintPath>%(Identity)</HintPath>
       <Private>False</Private>
     </Reference>
@@ -71,40 +72,42 @@
   </ItemGroup>
   <!-- Files & Classes -->
   <ItemGroup>
-    <Compile Include="dialogue\AbsCreateDialogue.cs" />
-    <Compile Include="dialogue\ChaneHeroClanDialogue.cs" />
-    <Compile Include="dialogue\CreateClanDialogue.cs" />
-    <Compile Include="dialogue\DialogueCreator.cs" />
+    <Compile Include="Behavior\VassalProtocolBehavior.cs" />
+    <Compile Include="Data\VassalProtocol.cs" />
+    <Compile Include="Dialogue\AbsCreateDialogue.cs" />
+    <Compile Include="Dialogue\ChaneHeroClanDialogue.cs" />
+    <Compile Include="Dialogue\CreateClanDialogue.cs" />
+    <Compile Include="Dialogue\DialogueCreator.cs" />
     <Compile Include="HeroInfoHelper.cs" />
     <Compile Include="HeroOperation.cs" />
-    <Compile Include="LordFromFamilyBehavior.cs" />
+    <Compile Include="Behavior\LordFromFamilyBehavior.cs" />
     <Compile Include="NewClanBannerEditorState.cs" />
-    <Compile Include="path\KindomScreenLayerPatch.cs" />
+    <Compile Include="Pathes\KindomScreenLayerPatch.cs" />
     <Compile Include="PlayerLineUtils.cs" />
     <Compile Include="RandomUtils.cs" />
     <Compile Include="SubModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ClanCreateBussniess.cs" />
-    <Compile Include="view\MBVassalBannerEditorGauntletScreen.cs" />
-    <Compile Include="view\MemberItemVM.cs" />
-    <Compile Include="view\VassalClanVM.cs" />
-    <Compile Include="view\VassalServiceVM.cs" />
-    <Compile Include="view\KindomScreenVM.cs" />
+    <Compile Include="View\MBVassalBannerEditorGauntletScreen.cs" />
+    <Compile Include="View\MemberItemVM.cs" />
+    <Compile Include="View\VassalClanVM.cs" />
+    <Compile Include="View\VassalServiceVM.cs" />
+    <Compile Include="View\KindomScreenVM.cs" />
     <Content Include="demand.txt" />
     <Content Include="Readme.txt" />
-    <Content Include="resource\GUI\Brushs\LordFromFamilyBrush.xml" />
-    <Content Include="resource\GUI\Prefabs\MemberItem.xml" />
-    <Content Include="resource\GUI\Prefabs\VassalClan.xml" />
-    <Content Include="resource\GUI\Prefabs\VassalService.xml" />
-    <Content Include="resource\GUI\Prefabs\KindomScreen.xml" />
-    <Content Include="resource\GUI\Prefabs\VassalsPannelOld.xml" />
-    <Content Include="resource\GUI\Prefabs\VassalsPannel.xml" />
-    <Content Include="resource\ModuleData\Languages\CNs\sue_clan_create_from_family.xml" />
-    <Content Include="resource\ModuleData\Languages\CNt\sue_clan_create_from_family.xml" />
-    <Content Include="resource\ModuleData\Languages\TR\sue_clan_create_from_family.xml" />
-    <Content Include="resource\ModuleData\xml_attributes_to_be_identified.txt" />
-    <Content Include="resource\SubModule.xml" />
-    <Content Include="resource\ModuleData\sue_clan_create_from_family.xml" />
+    <Content Include="Resource\GUI\Brushs\LordFromFamilyBrush.xml" />
+    <Content Include="Resource\GUI\Prefabs\MemberItem.xml" />
+    <Content Include="Resource\GUI\Prefabs\VassalClan.xml" />
+    <Content Include="Resource\GUI\Prefabs\VassalService.xml" />
+    <Content Include="Resource\GUI\Prefabs\KindomScreen.xml" />
+    <Content Include="Resource\GUI\Prefabs\VassalsPannelOld.xml" />
+    <Content Include="Resource\GUI\Prefabs\VassalsPannel.xml" />
+    <Content Include="Resource\ModuleData\Languages\CNs\sue_clan_create_from_family.xml" />
+    <Content Include="Resource\ModuleData\Languages\CNt\sue_clan_create_from_family.xml" />
+    <Content Include="Resource\ModuleData\Languages\TR\sue_clan_create_from_family.xml" />
+    <Content Include="Resource\ModuleData\xml_attributes_to_be_identified.txt" />
+    <Content Include="Resource\SubModule.xml" />
+    <Content Include="Resource\ModuleData\sue_clan_create_from_family.xml" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -112,7 +115,7 @@
   <ItemGroup />
   <!-- Post-Build -->
   <PropertyGroup>
-    <PostBuildEvent>xcopy  /Y /S "$(MSBuildProjectDirectory)\resource" "F:\steam\steamapps\common\Mount &amp; Blade II Bannerlord\Modules\SueLordFromFamily\"</PostBuildEvent>
+    <PostBuildEvent>xcopy  /Y /S "$(MSBuildProjectDirectory)\Resource" "F:\steam\steamapps\common\Mount &amp; Blade II Bannerlord\Modules\SueLordFromFamily\"</PostBuildEvent>
   </PropertyGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

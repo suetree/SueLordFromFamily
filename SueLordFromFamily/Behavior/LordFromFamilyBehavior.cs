@@ -11,7 +11,7 @@ using TaleWorlds.Library;
 using TaleWorlds.Localization;
 
 
-namespace SueLordFromFamily
+namespace SueLordFromFamily.Behavior
 {
     class LordFromFamilyBehavior : CampaignBehaviorBase
     {

@@ -124,9 +124,6 @@ namespace SueLordFromFamily
 				);
 			}
 
-
-
-
 			if (targetSpouse != null)
 			{
 				targetSpouse.Spouse = hero;

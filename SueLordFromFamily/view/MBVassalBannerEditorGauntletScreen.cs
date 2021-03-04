@@ -18,7 +18,7 @@ namespace SueLordFromFamily.view
     [GameStateScreen(typeof(NewClanBannerEditorState))]
     class MBVassalBannerEditorGauntletScreen : ScreenBase, IGameStateListener
     {
-		private const int ViewOrderPriority = 15;
+		private const int ViewOrderPriority = 16;
 
 		private readonly BannerEditorView _bannerEditorLayer;
 
@@ -50,7 +50,7 @@ namespace SueLordFromFamily.view
 			uint sigilColor = this._bannerEditorLayer.DataSource.BannerVM.GetSigilColor();
 			this._clan.Color = primaryColor;
 			this._clan.Color2 = sigilColor;
-			Game.Current.GameStateManager.PopState(0);
+		Game.Current.GameStateManager.PopState(0);	
 		}
 
 		public void OnCancel()
