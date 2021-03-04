@@ -47,8 +47,7 @@ namespace SueLordFromFamily
 			}
 
 			CultureObject culture = targetSettlement.Culture;
-			TextObject textObject = NameGenerator.Current.GenerateClanName(culture, targetSettlement);
-			TextObject nameTextObject = new TextObject(textObject.ToString());
+			TextObject clanName = NameGenerator.Current.GenerateClanName(culture, targetSettlement);
 			string str = Guid.NewGuid().ToString().Replace("-", "");
 
 			if (null  == hero.LastSeenPlace)
@@ -64,7 +63,7 @@ namespace SueLordFromFamily
 			hero.ChangeState(Hero.CharacterStates.Active);
 			Clan clan = TaleWorlds.ObjectSystem.MBObjectManager.Instance.CreateObject<Clan>("sue_clan_" + str);
 			Banner banner = Banner.CreateRandomClanBanner(-1);
-			clan.InitializeClan(nameTextObject, textObject, culture, banner);
+			clan.InitializeClan(clanName, clanName, culture, banner);
 			clan.SetLeader(hero);
 
 			//clan.Tier = 5; 修改家族等级
@@ -83,8 +82,8 @@ namespace SueLordFromFamily
 			hero.SetTraitLevel(DefaultTraits.Commander, 1);
 
 			MobileParty mobileParty = clan.CreateNewMobileParty(hero);
-			mobileParty.ItemRoster.AddToCounts(DefaultItems.Grain, 10, true);
-			mobileParty.ItemRoster.AddToCounts(DefaultItems.Meat, 5, true);
+			mobileParty.ItemRoster.AddToCounts(DefaultItems.Grain, 10);
+			mobileParty.ItemRoster.AddToCounts(DefaultItems.Meat, 5);
 
 			ChangeOwnerOfSettlementAction.ApplyByKingDecision(hero, targetSettlement);
 			clan.UpdateHomeSettlement(targetSettlement);
@@ -142,8 +141,8 @@ namespace SueLordFromFamily
 
 				MobileParty targetSpouseMobileParty = clan.CreateNewMobileParty(targetSpouse);
 
-				targetSpouseMobileParty.ItemRoster.AddToCounts(DefaultItems.Grain, 10, true);
-				targetSpouseMobileParty.ItemRoster.AddToCounts(DefaultItems.Meat, 5, true);
+				targetSpouseMobileParty.ItemRoster.AddToCounts(DefaultItems.Grain, 10);
+				targetSpouseMobileParty.ItemRoster.AddToCounts(DefaultItems.Meat, 5);
 				GiveGoldAction.ApplyBetweenCharacters(Hero.MainHero, targetSpouse, takeMoney / 2, false);
 			}
 

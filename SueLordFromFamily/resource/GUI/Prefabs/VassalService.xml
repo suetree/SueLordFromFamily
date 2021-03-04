@@ -2,10 +2,10 @@
   <Constants />
   <Variables />
   <Window>
-    <Widget HeightSizePolicy="StretchToParent" WidthSizePolicy="StretchToParent" Brush="Encyclopedia.SoundBrush"
+    <BrushWidget HeightSizePolicy="StretchToParent" WidthSizePolicy="StretchToParent" Brush="Encyclopedia.SoundBrush"
 		        Sprite="BlankWhiteSquare_9" Brush.Color="#000000DD">
       <Children>
-        <Widget HeightSizePolicy="Fixed" WidthSizePolicy="Fixed" SuggestedHeight="1000" SuggestedWidth="800"
+        <BrushWidget HeightSizePolicy="Fixed" WidthSizePolicy="Fixed" SuggestedHeight="1000" SuggestedWidth="800"
 				        HorizontalAlignment="Center" VerticalAlignment="Top" MarginTop="20" Brush="Encyclopedia.Frame">
           <Children>
             <OptionsScreenWidget Id="Options" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" CurrentOptionDescriptionWidget="ScrollablePanel\DescriptionsRightPanel\DescriptionsListPanel\CurrentOptionDescriptionWidget" CurrentOptionImageWidget="ScrollablePanel\DescriptionsRightPanel\DescriptionsListPanel\CurrentOptionImageWidget" CurrentOptionNameWidget="ScrollablePanel\DescriptionsRightPanel\DescriptionsListPanel\CurrentOptionNameWidget">
@@ -39,8 +39,8 @@
               </Children>
             </OptionsScreenWidget>
           </Children>
-        </Widget>
+        </BrushWidget>
       </Children>
-    </Widget>
+    </BrushWidget>
   </Window>
 </Prefab>
