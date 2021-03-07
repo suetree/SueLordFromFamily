@@ -278,7 +278,8 @@ namespace SueLordFromFamily.view
 		private void OnChangeClanNameDone(string newClanName)
 		{
 			TextObject textObject = new TextObject(newClanName ?? "", null);
-			this.Clan.Name = textObject;
+			//this.Clan.Name = textObject;
+			this.Clan.InitializeClan(textObject, textObject, this.Clan.Culture, this.Clan.Banner, default(Vec2));
 			this.Name = textObject.ToString();
 
 

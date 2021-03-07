@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TaleWorlds.CampaignSystem;
 using TaleWorlds.Core;
+using TaleWorlds.LinQuick;
 
 namespace SueLordFromFamily.dialogue
 {
@@ -205,7 +206,9 @@ namespace SueLordFromFamily.dialogue
 
 		private void ShowSelectSpouseList()
 		{
-			IEnumerable<CharacterObject> spouses = MobileParty.MainParty.MemberRoster.Troops.Where(new Func<CharacterObject, bool>((obj) => (obj.IsHero && obj.HeroObject.Spouse == null && obj.HeroObject.IsPlayerCompanion)));
+
+            List<TroopRosterElement> troopRosterElements = MobileParty.MainParty.MemberRoster.GetTroopRoster().FindAll((TroopRosterElement x) => x.Character.IsHero && x.Character.HeroObject.Spouse == null && x.Character.HeroObject.IsPlayerCompanion);
+            IEnumerable<CharacterObject> spouses = (IEnumerable<CharacterObject>)troopRosterElements;
 			int maxNumber = 10;
 
 			if (spouses.Count() <= maxNumber)
