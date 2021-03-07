@@ -13,7 +13,7 @@
     <AssemblyName>SueLordFromFamily</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <GamePath>E:\steam\steamapps\common\Mount &amp; Blade II Bannerlord</GamePath>
-	<!--<GamePath>E:\Games\157</GamePath>-->
+    <!--<GamePath>E:\Games\157</GamePath>-->
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <!-- Debug Configuration Properties -->

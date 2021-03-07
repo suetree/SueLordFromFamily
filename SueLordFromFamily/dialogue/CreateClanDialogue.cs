@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using TaleWorlds.CampaignSystem;
 using TaleWorlds.Core;
-using TaleWorlds.LinQuick;
 
 namespace SueLordFromFamily.dialogue
 {
@@ -206,16 +205,14 @@ namespace SueLordFromFamily.dialogue
 
 		private void ShowSelectSpouseList()
 		{
-
-            List<TroopRosterElement> troopRosterElements = MobileParty.MainParty.MemberRoster.GetTroopRoster().FindAll((TroopRosterElement x) => x.Character.IsHero && x.Character.HeroObject.Spouse == null && x.Character.HeroObject.IsPlayerCompanion);
-            IEnumerable<CharacterObject> spouses = (IEnumerable<CharacterObject>)troopRosterElements;
+			IEnumerable<TroopRosterElement> spouses = MobileParty.MainParty.MemberRoster.GetTroopRoster().Where(new Func<TroopRosterElement, bool>((obj) => (obj.Character.IsHero && obj.Character.HeroObject.Spouse == null && obj.Character.HeroObject.IsPlayerCompanion)));
 			int maxNumber = 10;
 
 			if (spouses.Count() <= maxNumber)
 			{
 				spouses.ToList().ForEach((obj) =>
 				{
-					Hero spouse = obj.HeroObject;
+					Hero spouse = obj.Character.HeroObject;
 					addPlayerLineToSelectSpouse(spouse);
 				});
 				CampaignGameStarter.AddRepeatablePlayerLine(FLAG_CLAN_CREATE_CHOICE_SPOUSE_ITEM, "sue_clan_create_from_family_take_spouse", "sue_clan_create_from_family_request_money", GameTexts.FindText("sue_clan_create_from_family_need_spouse_not", null).ToString(), null, null, 100, null);
@@ -224,7 +221,13 @@ namespace SueLordFromFamily.dialogue
 			else
 			{
 				Hero hero = Hero.OneToOneConversationHero;
-				List<CharacterObject> targets = spouses.ToList();
+				List<CharacterObject> targets = new List<CharacterObject>();
+				foreach (TroopRosterElement troopRosterElement in spouses)
+                {
+					if (troopRosterElement.Character.IsHero && troopRosterElement.Character.HeroObject.Spouse == null && troopRosterElement.Character.HeroObject.IsPlayerCompanion)
+						targets.Add(troopRosterElement.Character);
+
+				}
 				int excludeIndex = targets.IndexOf(hero.CharacterObject);
 				List<int> canAddIndexs = RandomUtils.RandomNumbers(maxNumber, 0, targets.Count(), new List<int>() { excludeIndex });
 				int index = 0;
