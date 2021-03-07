@@ -26,9 +26,6 @@ namespace SueLordFromFamily
                 ((CampaignGameStarter)gameStarterObject).AddBehavior(new LordFromFamilyBehavior());
                 ((CampaignGameStarter)gameStarterObject).LoadGameTexts(string.Format("{0}/Modules/{1}/ModuleData/sue_clan_create_from_family.xml", BasePath.Name, "SueLordFromFamily"));
             }
-
-               
-
         }
     }
 }
