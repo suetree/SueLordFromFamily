@@ -19,7 +19,7 @@ namespace SueLordFromFamily.view
 
 		GauntletKingdomScreen _parentScreen;
 
-		private GauntletMovie _currentMovie;
+		private IGauntletMovie _currentMovie;
 		GauntletLayer _serviceLayer;
 
 		VassalServiceVM clanServiceVM;
