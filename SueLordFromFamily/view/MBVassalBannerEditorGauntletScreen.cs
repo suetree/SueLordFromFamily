@@ -28,7 +28,7 @@ namespace SueLordFromFamily.view
 
 		public MBVassalBannerEditorGauntletScreen(NewClanBannerEditorState bannerEditorState)
 		{
-			LoadingWindow.EnableGlobalLoadingWindow(false);
+			LoadingWindow.EnableGlobalLoadingWindow();
 			this._clan = bannerEditorState.GetClan();
 			this._bannerEditorLayer = new BannerEditorView(bannerEditorState.GetCharacter(), bannerEditorState.GetClan().Banner, new ControlCharacterCreationStage(this.OnDone), new TextObject("{=WiNRdfsm}Done", null), new ControlCharacterCreationStage(this.OnCancel), new TextObject("{=3CpNUnVl}Cancel", null), null, null, null, null, null);
 			this._bannerEditorLayer.DataSource.SetClanRelatedRules(bannerEditorState.GetClan().Kingdom == null);
